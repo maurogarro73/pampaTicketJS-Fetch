@@ -42,66 +42,7 @@ let saveToLocalStorage = () => {
   localStorage.setItem('productosAgregadosJSON', storageJSON);
 };
 
-class Ticket {
-  constructor(id, nombre, info, lugar, precio, stock, img, categoria) {
-    this.id = id;
-    this.nombre = nombre;
-    this.info = info;
-    this.lugar = lugar;
-    this.precio = precio;
-    this.stock = stock;
-    this.img = img;
-    this.categoria = categoria;
-  }
-}
-
-const ticket1 = new Ticket(
-  1,
-  'Bersuit Vergarabat',
-  'Presentando su gira 2022 se presenta el 4 de Junio a las 16:00 Hs con un show único e irrepetible.',
-  'Club All-Boys',
-  2900,
-  300,
-  'img/recital1.jpg',
-  'rock'
-);
-const ticket2 = new Ticket(
-  2,
-  'DIVIDIDOS',
-  'Vuelve al Club Estudiantes por 5ta vez el próximo 27 de junio con un show NO APTO PARA MENORES DE 7 AÑOS',
-  'Club Estudiante',
-  5000,
-  100,
-  'img/recital2.jpg',
-  'rock'
-);
-const ticket3 = new Ticket(
-  3,
-  'No te va gustar',
-  'No Te Va Gustar se presentan en el Microestadio Municipal el próximo 10 de agosto a las 20hs con bandas soporte.',
-  'Microestadio Municipal',
-  1500,
-  400,
-  'img/recital3.jpg',
-  'rock'
-);
-const ticket4 = new Ticket(
-  4,
-  'Celia Cruz',
-  'Por primera vez en Santa Rosa. A días de arrancar la caravana de 10 Gran Rex agotados y con un recorrido de punta a punta por el país.',
-  'Club Estudiante',
-  1000,
-  200,
-  'img/recital6.jpg',
-  'cumbia'
-);
-
-let entradas = [ticket1, ticket2, ticket3, ticket4];
-
-/* filtrar por categorias */
-const copiaEntradas = [...entradas];
-
-function setFiltroCat(cat) {
+/* function setFiltroCat(cat) {
   if (cat == 'rock' || cat == 'cumbia') {
     entradas = [...copiaEntradas];
     entradas = entradas.filter((item) => item.categoria == cat);
@@ -110,12 +51,16 @@ function setFiltroCat(cat) {
   }
   renderRecitalesTodos();
 }
+ */
 
 /* Muestra todos los recitales */
 function renderRecitalesTodos() {
-  let htmlTodos = '';
-  for (let i = 0; i < entradas.length; i++) {
-    htmlTodos += `<div class="card my-2">
+  fetch('../api.json')
+    .then((res) => res.json())
+    .then((entradas) => {
+      let htmlTodos = '';
+      for (let i = 0; i < entradas.length; i++) {
+        htmlTodos += `<div class="card my-2">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="${entradas[i].img}" class="img-fluid rounded-start" alt="foto recital">
@@ -141,20 +86,31 @@ function renderRecitalesTodos() {
                         </div>
                     </div>
                   </div>`;
-  }
+      }
 
-  document.getElementById('cardJsTodos').innerHTML = htmlTodos;
+      document.getElementById('cardJsTodos').innerHTML = htmlTodos;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }
 renderRecitalesTodos();
 
 /* agrega ticket comprados al carrito */
 function agregarAlCarrito(id) {
-  const selectedTicket = entradas.find((entrada) => entrada.id == id);
-  ticketComprado.push(selectedTicket);
-  renderCarrito();
-  saveToLocalStorage();
-  /* Libreria Sweet Alert */
-  Swal.fire('Producto agregado!', 'Puedes seguir comprando...', 'success');
+  fetch('../api.json')
+    .then((res) => res.json())
+    .then((entradas) => {
+      const selectedTicket = entradas.find((entrada) => entrada.id == id);
+      ticketComprado.push(selectedTicket);
+      renderCarrito();
+      saveToLocalStorage();
+      /* Libreria Sweet Alert */
+      Swal.fire('Producto agregado!', 'Puedes seguir comprando...', 'success');
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 /* Elimina los ticket comprados */
@@ -180,9 +136,16 @@ function eliminarCart(id) {
     .then((result) => {
       if (result.isConfirmed) {
         /* Elimina los ticket comprados */
-        ticketComprado.splice(id, 1);
-        renderCarrito();
-        saveToLocalStorage();
+        fetch('../api.json')
+          .then((res) => res.json())
+          .then((entradas) => {
+            ticketComprado.splice(id, 1);
+            renderCarrito();
+            saveToLocalStorage();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
         swalWithBootstrapButtons.fire('Eliminado!', 'Su evento se eliminó de la lista.', 'success');
       } else if (
         /* Read more about handling dismissals below */

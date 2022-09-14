@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "nombre": "Bersuit Vergarabat",
+    "info": "Presentando su gira 2022 se presenta el 4 de Junio a las 16:00 Hs con un show único e irrepetible.",
+    "lugar": "Club All-Boys",
+    "precio": 2900,
+    "stock": 300,
+    "img": "img/recital1.jpg",
+    "categoria": "rock"
+  },
+  {
+    "id": 2,
+    "nombre": "DIVIDIDOS",
+    "info": "Vuelve al Club Estudiantes por 5ta vez el próximo 27 de junio con un show NO APTO PARA MENORES DE 7 AÑOS.",
+    "lugar": "Club Estudiante",
+    "precio": 5000,
+    "stock": 100,
+    "img": "img/recital2.jpg",
+    "categoria": "rock"
+  },
+  {
+    "id": 3,
+    "nombre": "No te va gustar",
+    "info": "No Te Va Gustar se presentan en el Microestadio Municipal el próximo 10 de agosto a las 20hs con bandas soporte.",
+    "lugar": "Microestadio Municipal",
+    "precio": 1500,
+    "stock": 400,
+    "img": "img/recital3.jpg",
+    "categoria": "rock"
+  },
+  {
+    "id": 4,
+    "nombre": "Celia Cruz",
+    "info": "Por primera vez en Santa Rosa. A días de arrancar la caravana de 10 Gran Rex agotados y con un recorrido de punta a punta por el país.",
+    "lugar": "Club Estudiante",
+    "precio": 1000,
+    "stock": 200,
+    "img": "img/recital6.jpg",
+    "categoria": "cumbia"
+  }
+]
